@@ -110,7 +110,6 @@ dist
 /out/
 /dist/
 /node_modules/
-/tls/
 
 # modules
 /vendor/
@@ -135,3 +134,7 @@ geckodriver.log
 
 # Dependency directories (remove the comment below to include it)
 vendor/
+
+# ignore tls content bud not .gitkeep
+/tls/*
+!/tls/.gitkeep
