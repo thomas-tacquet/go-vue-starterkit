@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "types": [
+            "vuetify"
+        ],
+        "baseUrl": "./",
+        "paths": {
+            "@Util/*": [
+                "frontend/utils/*"
+            ],
+            "@Compo/*": [
+                "frontend/components/*"
+            ],
+            "@Views/*": [
+                "frontend/views/*"
+            ],
+            "@Layout/*": [
+                "frontend/layouts/*"
+            ],
+            "@Asset/*": [
+                "frontend/assets/*"
+            ],
+            "@Image/*": [
+                "data/pictures/*"
+            ]
+        }
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
