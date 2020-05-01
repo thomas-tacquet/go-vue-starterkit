@@ -1,0 +1,83 @@
+{
+  "jest": {
+    "verbose": true,
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor"
+    },
+    "moduleNameMapper": {
+      "^@Util(.*)$": "<rootDir>/frontend/utils$1",
+      "^Compo(.*)$": "<rootDir>/frontend/components$1",
+      "^Page(.*)$": "<rootDir>/frontend/pages$1",
+      "^Layout(.*)$": "<rootDir>/frontend/layouts$1",
+      "^Asset(.*)$": "<rootDir>/frontend/assets$1",
+      "^Image(.*)$": "<rootDir>/data/pictures$1"
+    }
+  },
+  "scripts": {
+    "start": "export NODE_ENV=development && gulp",
+    "debug": "export NODE_ENV=development && gulp debug",
+    "clean": "gulp clean",
+    "build": "export NODE_ENV=production && gulp build",
+    "testFront": "jest",
+    "teste2e": "./node_modules/.bin/nightwatch",
+    "watchTest": "gulp watch:test"
+  },
+  "dependencies": {
+    "@mdi/js": "^4.9.95",
+    "@mdi/svg": "^4.9.95",
+    "axios": "^0.19.2",
+    "gulp-util": "^3.0.8",
+    "moment": "^2.25.0",
+    "typeface-roboto": "0.0.75",
+    "vue": "^2.6.11",
+    "vue-js-modal": "^1.3.35",
+    "vue-quill-editor": "^3.0.6",
+    "vue-router": "^3.1.6",
+    "vue-the-mask": "^0.11.1",
+    "vue-timeago": "^5.1.2",
+    "vuetify": "2.1.9",
+    "vuetify-loader": "^1.4.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "@babel/preset-env": "^7.9.6",
+    "@mdi/font": "^4.9.95",
+    "@vue/server-test-utils": "^1.0.0-beta.33",
+    "@vue/test-utils": "^1.0.0-beta.33",
+    "acorn": "^7.1.1",
+    "babel-loader": "^8.1.0",
+    "core-js": "^3.6.5",
+    "css-loader": "^3.5.3",
+    "deepmerge": "^4.2.2",
+    "del": "^5.1.0",
+    "fibers": "^4.0.3",
+    "file-loader": "^4.3.0",
+    "gulp": "^4.0.2",
+    "gulp-livereload": "^4.0.2",
+    "gulp-sync": "^0.1.4",
+    "hard-source-webpack-plugin": "^0.13.1",
+    "html-webpack-plugin": "^3.2.0",
+    "install": "^0.13.0",
+    "jest": "^24.9.0",
+    "jest-vue-preprocessor": "^1.7.1",
+    "material-design-icons-iconfont": "^5.0.1",
+    "node-sass": "^4.14.0",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^6.2.2",
+    "typescript": "^3.8.3",
+    "vue-loader": "^15.9.1",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.43.0",
+    "webpack-bundle-analyzer": "^3.7.0",
+    "webpack-stream": "^5.2.1"
+  }
+}
