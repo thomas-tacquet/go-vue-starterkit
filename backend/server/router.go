@@ -28,7 +28,7 @@ func (a *API) InitializeRoutes(testMode bool, db *gorm.DB) {
 
 	if !testMode {
 		r.Use(static.Serve("/assets/", static.LocalFile("./dist/", false)))
-		r.Use(favicon.New("./data/pictures/favicon.ico"))
+		r.Use(favicon.New("./frontend/assets/favicon/favicon.ico"))
 	}
 
 	api := r.Group("/api")

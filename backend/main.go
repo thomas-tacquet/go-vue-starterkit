@@ -1,6 +1,14 @@
 package main
 
 import (
+	"context"
+	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 
@@ -16,4 +24,35 @@ func main() {
 	if err := api.SetupViper(); err != nil {
 		panic(err)
 	}
+
+	api.InitializeRoutes(false, nil)
+
+	srv := &http.Server{
+		Addr:    ":" + api.Config.GetString("PORT"),
+		Handler: api.Router,
+	}
+
+	go func() {
+		if err := srv.ListenAndServeTLS(api.Config.GetString("RSA_PUBLIC"), api.Config.GetString("RSA_PRIVATE")); err != nil && err != http.ErrServerClosed {
+			fmt.Printf("listen :%s\n", err)
+		}
+	}()
+
+	// ctrl+c catch
+	quit := make(chan os.Signal)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, syscall.SIGABRT)
+	<-quit
+	fmt.Println("Shutdown Server ...")
+	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
+	defer cancel()
+
+	if err := srv.Shutdown(ctx); err != nil {
+		fmt.Printf("Server Shutdown: %s \n", err)
+	}
+	select {
+	case <-ctx.Done():
+		fmt.Println("timeout of 2 seconds")
+	}
+	fmt.Println("Server exiting")
+
 }
