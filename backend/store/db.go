@@ -57,7 +57,14 @@ func InitAndGetDB(reset bool, schema string, eLogrus *logrus.Entry) *gorm.DB {
 
 func CreateDBInstance(schema string, eLogrus *logrus.Entry) *gorm.DB {
 
-	dbConnexionString := helpers.DatabaseFormat("127.0.0.1", "5431", "vuego", "vuego123+", "vuego", "disable", schema)
+	dbConnexionString := helpers.DatabaseFormat(
+		"127.0.0.1",
+		"5431",
+		"vuego",
+		"vuego123+",
+		"vuego",
+		"disable",
+		schema)
 
 	var err error
 	var db *gorm.DB
