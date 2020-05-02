@@ -18,7 +18,7 @@ import (
 )
 
 //InitAndGetDB init database connexion and returns it
-func InitAndGetDB(reset bool, schema string, eLogrus *logrus.Entry) *gorm.DB {
+func InitAndGetDB(reset bool, schema string, logger *logrus.Entry) *gorm.DB {
 	myOptions := gormigrate.DefaultOptions
 
 	// use database transactions only if reset is not set to true
@@ -26,7 +26,7 @@ func InitAndGetDB(reset bool, schema string, eLogrus *logrus.Entry) *gorm.DB {
 		myOptions.UseTransaction = true
 	}
 
-	db := CreateDBInstance(schema, eLogrus)
+	db := CreateDBInstance(schema, logger)
 	m := gormigrate.New(db, myOptions, migrations.Migrations)
 
 	if reset {
@@ -55,7 +55,7 @@ func InitAndGetDB(reset bool, schema string, eLogrus *logrus.Entry) *gorm.DB {
 	return db
 }
 
-func CreateDBInstance(schema string, eLogrus *logrus.Entry) *gorm.DB {
+func CreateDBInstance(schema string, logger *logrus.Entry) *gorm.DB {
 
 	dbConnexionString := helpers.DatabaseFormat(
 		"127.0.0.1",
@@ -70,18 +70,18 @@ func CreateDBInstance(schema string, eLogrus *logrus.Entry) *gorm.DB {
 	var db *gorm.DB
 
 	if db, err = gorm.Open("postgres", dbConnexionString); err != nil {
-		log.Printf("Error initializing db on 5433 : %v", err)
+		logger.Errorf("Error initializing db on 5433 : %v", err)
 	}
 
 	if err := db.DB().Ping(); err != nil {
-		log.Fatalf("Error pinging db : %v", err)
+		logger.Fatalf("Error pinging db : %v", err)
 	}
 
 	db.DB().SetMaxIdleConns(10)
 	db.DB().SetMaxOpenConns(25)
 
-	if eLogrus != nil {
-		db.SetLogger(eLogrus)
+	if logger != nil {
+		db.SetLogger(logger)
 	} else {
 		db.SetLogger(
 			DefaultDatabaseLogger{
@@ -92,7 +92,7 @@ func CreateDBInstance(schema string, eLogrus *logrus.Entry) *gorm.DB {
 
 	db.LogMode(true)
 
-	log.Printf("Connected to DB successfully")
+	logger.Trace("Connected to DB successfully")
 	return db
 }
 

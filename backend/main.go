@@ -12,6 +12,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 
+	"github.com/thomas-tacquet/go-vue-starterkit/backend/helpers"
 	"github.com/thomas-tacquet/go-vue-starterkit/backend/server"
 	"github.com/thomas-tacquet/go-vue-starterkit/backend/store"
 )
@@ -21,12 +22,16 @@ func main() {
 		Router: gin.New(),
 		Config: viper.New(),
 	}
+	var logs helpers.Logger
+	if err := logs.Init("govue", "trace", "."); err != nil {
+		panic(err)
+	}
 
 	if err := api.SetupViper(); err != nil {
 		panic(err)
 	}
 
-	db := store.CreateDBInstance("public", nil)
+	db := store.InitAndGetDB(false, "public", logs.Logs)
 	defer func() {
 		if err := db.Close(); err != nil {
 			fmt.Printf("Couldn't close DB : %s", err.Error())
