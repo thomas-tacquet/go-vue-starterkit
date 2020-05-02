@@ -1,0 +1,15 @@
+version: "3.1"
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: vuego123+
+      POSTGRES_USER: vuego
+    ports:
+      - "127.0.0.1:5431:5432"
+    volumes:
+      - "pgdata-vuego:/var/lib/postgresql/data"
+volumes:
+  pgdata-vuego:

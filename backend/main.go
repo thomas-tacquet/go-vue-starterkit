@@ -13,6 +13,7 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/thomas-tacquet/go-vue-starterkit/backend/server"
+	"github.com/thomas-tacquet/go-vue-starterkit/backend/store"
 )
 
 func main() {
@@ -24,6 +25,13 @@ func main() {
 	if err := api.SetupViper(); err != nil {
 		panic(err)
 	}
+
+	db := store.CreateDBInstance("public", nil)
+	defer func() {
+		if err := db.Close(); err != nil {
+			fmt.Printf("Couldn't close DB : %s", err.Error())
+		}
+	}()
 
 	api.InitializeRoutes(false, nil)
 
