@@ -40,7 +40,7 @@ func main() {
 		}
 	}()
 
-	api.InitializeRoutes(false, nil)
+	api.InitializeRoutes(false, db)
 
 	srv := &http.Server{
 		Addr:    ":" + api.Config.GetString("PORT"),

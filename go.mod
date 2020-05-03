@@ -14,6 +14,7 @@ require (
 	github.com/sirupsen/logrus v1.2.0
 	github.com/spf13/viper v1.6.3
 	github.com/thinkerou/favicon v0.1.0
+	github.com/thoas/go-funk v0.6.0
 	gopkg.in/gormigrate.v1 v1.6.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )

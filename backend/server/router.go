@@ -33,12 +33,10 @@ func (a *API) InitializeRoutes(testMode bool, db *gorm.DB) {
 
 	api := r.Group("/api")
 	{
-
 		v1NoAuth := api.Group("/v1")
 		{
 			v1NoAuth.GET("/", index)
 		}
-
 	}
 }
 
@@ -58,6 +56,7 @@ func NoRoute(c *gin.Context) {
 		var err error
 		if info, err = os.Stat("./dist/index.html"); err != nil {
 			helpers.SendError(c, helpers.ErrInternalServerError(), nil, err)
+			return
 		}
 
 		if indexFile == nil || !lastModTime.Equal(info.ModTime()) {
