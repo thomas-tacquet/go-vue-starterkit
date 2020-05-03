@@ -5,11 +5,11 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_PASSWORD: vuego123+
-      POSTGRES_USER: vuego
+      POSTGRES_PASSWORD: govue123+
+      POSTGRES_USER: govue
     ports:
       - "127.0.0.1:5431:5432"
     volumes:
-      - "pgdata-vuego:/var/lib/postgresql/data"
+      - "pgdata-govue:/var/lib/postgresql/data"
 volumes:
-  pgdata-vuego:
+  pgdata-govue:
