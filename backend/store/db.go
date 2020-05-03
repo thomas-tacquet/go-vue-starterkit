@@ -17,7 +17,7 @@ import (
 )
 
 //InitAndGetDB init database connexion and returns it
-func InitAndGetDB(reset bool, schema string, logger *logrus.Entry) *gorm.DB {
+func InitAndGetDB(reset bool, dbConfig helpers.DatabaseConfig, logger *logrus.Entry) *gorm.DB {
 	myOptions := gormigrate.DefaultOptions
 
 	// use database transactions only if reset is not set to true
@@ -25,7 +25,7 @@ func InitAndGetDB(reset bool, schema string, logger *logrus.Entry) *gorm.DB {
 		myOptions.UseTransaction = true
 	}
 
-	db := CreateDBInstance(schema, logger)
+	db := CreateDBInstance(dbConfig, logger)
 	m := gormigrate.New(db, myOptions, migrations.Migrations)
 
 	if reset {
@@ -54,22 +54,13 @@ func InitAndGetDB(reset bool, schema string, logger *logrus.Entry) *gorm.DB {
 	return db
 }
 
-func CreateDBInstance(schema string, logger *logrus.Entry) *gorm.DB {
-
-	dbConnexionString := helpers.DatabaseFormat(
-		"127.0.0.1",
-		"5431",
-		"vuego",
-		"vuego123+",
-		"vuego",
-		"disable",
-		schema)
+func CreateDBInstance(dbConfig helpers.DatabaseConfig, logger *logrus.Entry) *gorm.DB {
 
 	var err error
 	var db *gorm.DB
 
-	if db, err = gorm.Open("postgres", dbConnexionString); err != nil {
-		logger.Errorf("Error initializing db on 5433 : %v", err)
+	if db, err = gorm.Open("postgres", dbConfig.String()); err != nil {
+		logger.Fatalf("Error initializing db on %s : %v", dbConfig.Port, err)
 	}
 
 	if err := db.DB().Ping(); err != nil {

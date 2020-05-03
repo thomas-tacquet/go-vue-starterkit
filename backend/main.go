@@ -33,7 +33,7 @@ func main() {
 		panic(err)
 	}
 
-	db := store.InitAndGetDB(false, "public", logs.Logs)
+	db := store.InitAndGetDB(false, helpers.InitWithViper(api.Config), logs.Logs)
 	defer func() {
 		if err := db.Close(); err != nil {
 			fmt.Printf("Couldn't close DB : %s", err.Error())
