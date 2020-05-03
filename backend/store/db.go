@@ -6,12 +6,11 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
-	"gopkg.in/gormigrate.v1"
-
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/qor/validations"
+	"github.com/sirupsen/logrus"
+	"gopkg.in/gormigrate.v1"
 
 	"github.com/thomas-tacquet/go-vue-starterkit/backend/helpers"
 	migrations "github.com/thomas-tacquet/go-vue-starterkit/backend/store/migrations"

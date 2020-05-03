@@ -30,5 +30,4 @@ func (a *API) SetupViper() error {
 
 // SetupViperDefaults is used to define default necessary variables
 func (a *API) SetupViperDefaults() {
-
 }

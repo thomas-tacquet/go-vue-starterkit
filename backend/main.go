@@ -22,12 +22,14 @@ func main() {
 		Router: gin.New(),
 		Config: viper.New(),
 	}
-	var logs helpers.Logger
-	if err := logs.Init("govue", "trace", "."); err != nil {
+
+	// setting up viper to read .env file
+	if err := api.SetupViper(); err != nil {
 		panic(err)
 	}
-
-	if err := api.SetupViper(); err != nil {
+	// setting up log
+	var logs helpers.Logger
+	if err := logs.InitWithViper(api.Config); err != nil {
 		panic(err)
 	}
 
@@ -46,7 +48,12 @@ func main() {
 	}
 
 	go func() {
-		if err := srv.ListenAndServeTLS(api.Config.GetString("RSA_PUBLIC"), api.Config.GetString("RSA_PRIVATE")); err != nil && err != http.ErrServerClosed {
+		err := srv.ListenAndServeTLS(
+			api.Config.GetString("RSA_PUBLIC"),
+			api.Config.GetString("RSA_PRIVATE"),
+		)
+
+		if err != nil && err != http.ErrServerClosed {
 			fmt.Printf("listen :%s\n", err)
 		}
 	}()

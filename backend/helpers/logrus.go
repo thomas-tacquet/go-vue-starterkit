@@ -5,9 +5,10 @@ import (
 
 	"github.com/natefinch/lumberjack"
 	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
-const defaultLogPath = "/var/log/" // default log path
+const defaultLogPath = "." // default log path
 
 // Logger
 type Logger struct {
@@ -55,6 +56,15 @@ func (l *Logger) Init(name, logLevel, logPath string) error {
 		"service": l.name,
 	})
 	return nil
+}
+
+// InitWithViper allows to init log by just passing viper instance instead of all parameters
+// You can use InitWithViper or Init
+func (l *Logger) InitWithViper(vpr *viper.Viper) error {
+	return l.Init(
+		vpr.GetString("LOG_NAME"),
+		vpr.GetString("LOG_LEVEL"),
+		vpr.GetString("LOG_PATH"))
 }
 
 // SetupLogrus
