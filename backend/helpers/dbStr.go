@@ -6,6 +6,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+// DatabaseConfig is a struct to manage database configuration.
 type DatabaseConfig struct {
 	Host     string
 	Port     string
@@ -16,19 +17,22 @@ type DatabaseConfig struct {
 	Schema   string
 }
 
+// InitWithViper simply takes a configured viper pointer and returns a new DatabaseConfig
+// with hydrated fields according to viper's configuration.
 func InitWithViper(vpr *viper.Viper) DatabaseConfig {
 	return DatabaseConfig{
-		Host:     vpr.GetString("DB_HOST"),
-		Port:     vpr.GetString("DB_PORT"),
-		User:     vpr.GetString("DB_USER"),
-		Password: vpr.GetString("DB_PASSWORD"),
-		DBName:   vpr.GetString("DB_NAME"),
-		SSLMode:  vpr.GetString("DB_SSLMODE"),
-		Schema:   vpr.GetString("DB_SCHEMA"),
+		Host:     vpr.GetString(EnvDBHost),
+		Port:     vpr.GetString(EnvDBPort),
+		User:     vpr.GetString(EnvDBUser),
+		Password: vpr.GetString(EnvDBPassword),
+		DBName:   vpr.GetString(EnvDBName),
+		SSLMode:  vpr.GetString(EnvDBSSlMode),
+		Schema:   vpr.GetString(EnvDBSchema),
 	}
 }
 
-func (dbc DatabaseConfig) String() string {
-	const toBeFormatted = "host=%s port=%s user=%s password=%s dbname=%s sslmode=%s search_path=%s"
-	return fmt.Sprintf(toBeFormatted, dbc.Host, dbc.Port, dbc.User, dbc.Password, dbc.DBName, dbc.SSLMode, dbc.Schema)
+// ConnString returns a connexion string according to current configuration.
+func (dbc DatabaseConfig) ConnString() string {
+	const connexionString = "host=%s port=%s user=%s password=%s dbname=%s sslmode=%s search_path=%s"
+	return fmt.Sprintf(connexionString, dbc.Host, dbc.Port, dbc.User, dbc.Password, dbc.DBName, dbc.SSLMode, dbc.Schema)
 }

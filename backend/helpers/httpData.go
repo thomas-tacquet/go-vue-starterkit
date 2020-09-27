@@ -25,9 +25,9 @@ func SendError(c *gin.Context, errorNewGen ErrorData, details map[ErrorKey]inter
 	strErr, err := json.Marshal(errorNewGen)
 	if err != nil {
 		logError(err)
-		c.Error(err)
+		_ = c.Error(err)
 		panic(err)
 	}
 	c.AbortWithStatusJSON(errorNewGen.HttpStatus, errorNewGen)
-	c.Error(errors.New(string(strErr)))
+	_ = c.Error(errors.New(string(strErr)))
 }

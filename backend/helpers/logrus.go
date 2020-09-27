@@ -8,20 +8,26 @@ import (
 	"github.com/spf13/viper"
 )
 
-const defaultLogPath = "." // default log path
+// default log path, if not set in config file
+const defaultLogPath = "."
 
 // Logger
 type Logger struct {
-	Logs   *logrus.Entry
-	name   string
+	// Logs is main pointer to logrus
+	Logs *logrus.Entry
+	// name is used to determine log file name
+	name string
+	// isInit is used to avoid double initialization
 	isInit bool
 }
 
-// ErrInitAlreadyDone is returned when multiplit init function is called on same object
-var ErrInitAlreadyDone = errors.New("this instance is already initialized")
+var (
+	// ErrInitAlreadyDone is returned when multiplit init function is called on same object
+	ErrInitAlreadyDone = errors.New("this instance is already initialized")
 
-// ErrFieldCantBeEmpty is returned when a necessary field is empty
-var ErrFieldCantBeEmpty = errors.New("field can't be empty")
+	// ErrFieldCantBeEmpty is returned when a necessary field is empty
+	ErrFieldCantBeEmpty = errors.New("field can't be empty")
+)
 
 // Init create and setup logrus
 // available log levels : panic, fatal, error, warn, info, debug, trace (ordered)
@@ -55,6 +61,7 @@ func (l *Logger) Init(name, logLevel, logPath string) error {
 	l.Logs = log.WithFields(logrus.Fields{
 		"service": l.name,
 	})
+
 	return nil
 }
 
@@ -62,14 +69,13 @@ func (l *Logger) Init(name, logLevel, logPath string) error {
 // You can use InitWithViper or Init
 func (l *Logger) InitWithViper(vpr *viper.Viper) error {
 	return l.Init(
-		vpr.GetString("LOG_NAME"),
-		vpr.GetString("LOG_LEVEL"),
-		vpr.GetString("LOG_PATH"))
+		vpr.GetString(EnvLogName),
+		vpr.GetString(EnvLogLevel),
+		vpr.GetString(EnvLogPath))
 }
 
 // SetupLogrus
 func SetupLogrus(path string, logger *logrus.Logger) error {
-
 	logger.SetFormatter(&logrus.TextFormatter{
 		DisableColors: false,
 		FullTimestamp: true,
@@ -85,5 +91,6 @@ func SetupLogrus(path string, logger *logrus.Logger) error {
 		MaxAge:     7, //days
 		Compress:   true,
 	}
+
 	return nil
 }

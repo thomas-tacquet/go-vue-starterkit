@@ -49,8 +49,8 @@ func main() {
 
 	go func() {
 		err := srv.ListenAndServeTLS(
-			api.Config.GetString("RSA_PUBLIC"),
-			api.Config.GetString("RSA_PRIVATE"),
+			api.Config.GetString(helpers.EnvPublicRSA),
+			api.Config.GetString(helpers.EnvPrivateRSA),
 		)
 
 		if err != nil && err != http.ErrServerClosed {

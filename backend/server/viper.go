@@ -4,6 +4,8 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+
+	"github.com/thomas-tacquet/go-vue-starterkit/backend/helpers"
 )
 
 // SetupViper is used to define config prefixes and set config file
@@ -11,7 +13,7 @@ import (
 func (a *API) SetupViper() error {
 	filename := ".env"
 
-	switch os.Getenv("GOVUE_ENV") {
+	switch os.Getenv(helpers.EnvApp) {
 	case "production":
 		filename = ".env.prod"
 	}
@@ -20,7 +22,7 @@ func (a *API) SetupViper() error {
 		return err
 	}
 
-	a.Config.SetEnvPrefix("GOVUE")
+	a.Config.SetEnvPrefix(helpers.ConfigPrefix)
 	a.Config.AutomaticEnv()
 
 	a.SetupViperDefaults()

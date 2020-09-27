@@ -13,7 +13,7 @@ import (
 	"gopkg.in/gormigrate.v1"
 
 	"github.com/thomas-tacquet/go-vue-starterkit/backend/helpers"
-	migrations "github.com/thomas-tacquet/go-vue-starterkit/backend/store/migrations"
+	"github.com/thomas-tacquet/go-vue-starterkit/backend/store/migrations"
 )
 
 //InitAndGetDB init database connexion and returns it
@@ -59,7 +59,7 @@ func CreateDBInstance(dbConfig helpers.DatabaseConfig, logger *logrus.Entry) *go
 	var err error
 	var db *gorm.DB
 
-	if db, err = gorm.Open("postgres", dbConfig.String()); err != nil {
+	if db, err = gorm.Open("postgres", dbConfig.ConnString()); err != nil {
 		logger.Fatalf("Error initializing db on %s : %v", dbConfig.Port, err)
 	}
 
