@@ -26,8 +26,7 @@ require (
 	github.com/spf13/viper v1.7.0
 	github.com/thinkerou/favicon v0.1.0
 	github.com/thoas/go-funk v0.6.0
-	golang.org/x/crypto v0.0.0-20200604202706-70a84ac30bf9 // indirect
-	golang.org/x/sys v0.0.0-20200610111108-226ff32320da // indirect
+	golang.org/x/crypto v0.1.0 // indirect
 	google.golang.org/protobuf v1.24.0 // indirect
 	gopkg.in/gormigrate.v1 v1.6.0
 	gopkg.in/ini.v1 v1.57.0 // indirect
